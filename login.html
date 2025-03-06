@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOX FELIX | Developer Login</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
         .container { padding: 50px; background: white; width: 40%; margin: 50px auto; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        input { display: block; width: 80%; margin: 10px auto; padding: 10px; }
-        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        input, button { display: block; width: 80%; margin: 10px auto; padding: 10px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -18,106 +16,44 @@
         <h2>Developer Login</h2>
         <input type="email" id="email" placeholder="Email">
         <input type="password" id="password" placeholder="Password">
-        <button id="loginBtn">Login</button>
-        <button id="registerBtn">Register</button>
-        <button id="resetBtn">Reset Password</button>
+        <button onclick="checkLogin()">Login</button>
+        <button onclick="register()">Register</button>
         <p id="message"></p>
     </div>
 
-    <!-- Firebase Scripts -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            try {
-                const firebaseConfig = {
-                    apiKey: "YOUR-API-KEY",
-                    authDomain: "your-app.firebaseapp.com",
-                    projectId: "your-app-id",
-                    storageBucket: "your-app.appspot.com",
-                    messagingSenderId: "your-messaging-id",
-                    appId: "your-app-id"
-                };
+        let approvedUsers = [];
 
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
-                }
+        // ✅ Fetch approved user emails from GitHub JSON file
+        fetch('https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/vox-felix/main/approved_users.json')
+            .then(response => response.json())
+            .then(data => {
+                approvedUsers = data.approved_users;
+            })
+            .catch(error => console.error("Error loading approved users:", error));
 
-                const auth = firebase.auth();
-
-                // ✅ Attach button functions safely
-                document.getElementById("registerBtn").onclick = function () {
-                    register(auth);
-                };
-                document.getElementById("loginBtn").onclick = function () {
-                    login(auth);
-                };
-                document.getElementById("resetBtn").onclick = function () {
-                    resetPassword(auth);
-                };
-
-            } catch (error) {
-                console.error("🔥 Firebase Initialization Error:", error);
-            }
-        });
-
-        const allowedEmails = [
-            "seankerr@novawerke.ai",
- 	        “dkerr14@jh.edu”,
-	        "qiuhaoalex@gmail.com”,
-	        "csnelli1@jh.edu”,
-	        "ctighe4@jh.edu”,
-	        "ltesta1@jh.edu”,
-	        "lmirele2@jh.edu”,
-	        "michelevanzaldua@gmail.com”,
-	        "snellingstephen91@gmail.com”,
-	        "nburton8@jh.edu”,
-	        "rchin7@jh.edu”,
-	        "sstein28@jh.edu”,
-	        “mtorre44@jh.edu”,
-	        “mattwalter35@gmail.com”,
-        ];
-
-        function login(auth) {
+        function checkLogin() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    localStorage.setItem("auth", "true");
-                    window.location.href = "developer.html";
-                })
-                .catch(error => {
-                    document.getElementById("message").innerText = error.message;
-                });
-        }
-
-        function register(auth) {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            if (!allowedEmails.includes(email)) {
-                document.getElementById("message").innerText = "Your email is not authorized to register.";
+            if (!approvedUsers.includes(email)) {
+                document.getElementById("message").innerText = "Access denied. Contact admin.";
                 return;
             }
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    alert("Account created! You can now log in.");
-                })
-                .catch(error => {
-                    document.getElementById("message").innerText = error.message;
-                });
+            sessionStorage.setItem("loggedIn", "true");
+            window.location.href = "developer.html";
         }
 
-        function resetPassword(auth) {
+        function register() {
             const email = document.getElementById("email").value;
 
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    alert("Password reset email sent!");
-                })
-                .catch(error => {
-                    document.getElementById("message").innerText = error.message;
-                });
+            if (!approvedUsers.includes(email)) {
+                document.getElementById("message").innerText = "You are not authorized to register.";
+                return;
+            }
+
+            alert("Registration successful. Please log in.");
         }
     </script>
 </body>
