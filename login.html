@@ -20,6 +20,17 @@
         <button onclick="register()">Register</button>
         <p id="message"></p>
     </div>
+    <form>
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <p id="message"></p>
 
     <script>
         console.log("Loaded Users from LocalStorage:", JSON.parse(localStorage.getItem("registeredUsers")));
@@ -47,6 +58,19 @@
                 window.location.href = "developer.html"; // ✅ Redirect to developer portal
             } else {
                 document.getElementById("message").innerText = "❌ Incorrect email or password.";
+            }
+        }
+        
+        function checkLogin() {
+            console.log("✅ checkLogin() function is running...");
+
+            let loggedInUser = localStorage.getItem("loggedInUser");
+
+            if (loggedInUser) {
+                console.log("✅ User is already logged in, redirecting to developer portal...");
+                window.location.href = "developer.html";
+            } else {
+                console.log("❌ No user logged in, staying on login page.");
             }
         }
 
