@@ -25,7 +25,7 @@
         let approvedUsers = [];
 
         // ✅ Fetch approved user emails from GitHub JSON file
-        fetch('https://raw.githubusercontent.com/mapother/vox-felix/main/approved_users.json')
+        fetch('https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/vox-felix/main/approved_users.json')
             .then(response => response.json())
             .then(data => {
                 approvedUsers = data.approved_users;
@@ -36,25 +36,43 @@
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
+            let users = JSON.parse(localStorage.getItem("registeredUsers")) || {};
+
             if (!approvedUsers.includes(email)) {
                 document.getElementById("message").innerText = "Access denied. Contact admin.";
                 return;
             }
 
-            sessionStorage.setItem("loggedIn", "true");
-            window.location.href = "developer.html";
+            if (users[email] && users[email] === password) {
+                sessionStorage.setItem("loggedIn", "true");
+                window.location.href = "developer.html";
+            } else {
+                document.getElementById("message").innerText = "Invalid email or password.";
+            }
         }
 
         function register() {
             const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            let users = JSON.parse(localStorage.getItem("registeredUsers")) || {};
 
             if (!approvedUsers.includes(email)) {
                 document.getElementById("message").innerText = "You are not authorized to register.";
                 return;
             }
 
-            alert("Registration successful. Please log in.");
+            if (users[email]) {
+                document.getElementById("message").innerText = "You are already registered. Please log in.";
+                return;
+            }
+
+            users[email] = password;
+            localStorage.setItem("registeredUsers", JSON.stringify(users));
+
+            alert("Registration successful. You can now log in.");
         }
     </script>
 </body>
 </html>
+
