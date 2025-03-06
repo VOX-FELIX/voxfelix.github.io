@@ -34,8 +34,6 @@
         })
         .catch(error => console.error("❌ ERROR FETCHING JSON:", error));
 
-
-
         function login() {
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
@@ -49,7 +47,6 @@
                 document.getElementById("message").innerText = "❌ Incorrect email or password.";
             }
         }
-
 
         function register() {
             const email = document.getElementById("email").value;
@@ -72,6 +69,14 @@
 
             alert("Registration successful. You can now log in.");
         }
+
+            if (!localStorage.getItem("loggedInUser")) {
+                history.pushState(null, null, location.href);
+                window.onpopstate = function () {
+                    history.go(1);
+                };
+            }
+
     </script>
 </body>
 </html>
