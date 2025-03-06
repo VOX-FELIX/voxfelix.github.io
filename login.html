@@ -26,13 +26,14 @@
 
         // ✅ Fetch approved user emails from GitHub JSON file
     
-    fetch('https://raw.githubusercontent.com/VOX-FELIX/voxfelix.github.io/refs/heads/main/approved_users.json')
+    fetch('/approved_users.json')
         .then(response => response.json())
         .then(data => {
             approvedUsers = data.approved_users;
-            console.log("✅ Approved Users List Loaded:", approvedUsers); // <-- DEBUG LOG
+            console.log("✅ Approved Users List Loaded:", approvedUsers);
         })
-        .catch(error => console.error("❌ Error loading approved users:", error));
+        .catch(error => console.error("❌ ERROR FETCHING JSON:", error));
+
 
 
         function checkLogin() {
