@@ -1,115 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOX FELIX | Developer Login</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
-        .container { padding: 50px; background: white; width: 40%; margin: 50px auto; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        input, button { display: block; width: 80%; margin: 10px auto; padding: 10px; }
-        button { background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Developer Login</h2>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="checkLogin()">Login</button>
-        <button onclick="register()">Register</button>
-        <p id="message"></p>
-    </div>
-    <form>
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Enter your email" required>
+function login() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Enter your password" required>
+    console.log("🛠️ Login Attempt: ", email, password); // Debugging Line
 
-        <button type="button" onclick="login()">Login</button>
-    </form>
+    // Retrieve stored users
+    let users = JSON.parse(localStorage.getItem("registeredUsers")) || {};
+    console.log("📂 Stored Users: ", users); // Debugging Line
 
-    <p id="message"></p>
-
-    <script>
-        console.log("Loaded Users from LocalStorage:", JSON.parse(localStorage.getItem("registeredUsers")));
-
-        let approvedUsers = [];
-
-        // ✅ Fetch approved user emails from GitHub JSON file
-    
-    fetch('/approved_users.json')
-        .then(response => response.json())
-        .then(data => {
-            approvedUsers = data.approved_users;
-            console.log("✅ Approved Users List Loaded:", approvedUsers);
-        })
-        .catch(error => console.error("❌ ERROR FETCHING JSON:", error));
-
-        function login() {
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-
-            let users = JSON.parse(localStorage.getItem("registeredUsers")) || {};
-
-            if (users[email] === password) {
-                localStorage.setItem("loggedInUser", email); // ✅ Store session
-                window.location.href = "developer.html"; // ✅ Redirect to developer portal
-            } else {
-                document.getElementById("message").innerText = "❌ Incorrect email or password.";
-            }
+    if (users[email]) {
+        console.log("✅ User found in storage. Checking password...");
+        if (users[email] === password) {
+            console.log("✅ Password correct! Logging in...");
+            localStorage.setItem("loggedInUser", email); // Store session
+            window.location.href = "developer.html"; // Redirect to Developer Page
+        } else {
+            console.log("❌ Incorrect password.");
+            document.getElementById("message").innerText = "❌ Incorrect password.";
         }
-        
-        function checkLogin() {
-            console.log("✅ checkLogin() function is running...");
-
-            let loggedInUser = localStorage.getItem("loggedInUser");
-
-            if (loggedInUser) {
-                console.log("✅ User is already logged in, redirecting to developer portal...");
-                window.location.href = "developer.html";
-            } else {
-                console.log("❌ No user logged in, staying on login page.");
-            }
-        }
-
-        function register() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            let users = JSON.parse(localStorage.getItem("registeredUsers")) || {};
-
-            if (!approvedUsers.includes(email)) {
-                document.getElementById("message").innerText = "You are not authorized to register.";
-                return;
-            }
-
-            if (users[email]) {
-                document.getElementById("message").innerText = "You are already registered. Please log in.";
-                return;
-            }
-
-            users[email] = password;
-            localStorage.setItem("registeredUsers", JSON.stringify(users));
-
-            alert("Registration successful. You can now log in.");
-        }
-
-            if (!localStorage.getItem("loggedInUser")) {
-                history.pushState(null, null, location.href);
-                window.onpopstate = function () {
-                    history.go(1);
-                };
-            }
-        
-            let testUsers = {
-                "seankerr@novawerke.ai": "password123"
-            };
-            localStorage.setItem("registeredUsers", JSON.stringify(testUsers));
-            console.log("✅ Test user added!");
-
-    </script>
-</body>
-</html>
-
+    } else {
+        console.log("❌ User not found in storage.");
+        document.getElementById("message").innerText = "❌ Email not registered.";
+    }
+}
