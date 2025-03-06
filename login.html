@@ -78,6 +78,12 @@
                     history.go(1);
                 };
             }
+        
+            let testUsers = {
+                "seankerr@novawerke.ai": "password123"
+            };
+            localStorage.setItem("registeredUsers", JSON.stringify(testUsers));
+            console.log("✅ Test user added!");
 
     </script>
 </body>
