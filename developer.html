@@ -18,6 +18,12 @@
     </div>
 
     <script>
+        window.onload = function () {
+            if (!localStorage.getItem("loggedInUser")) {
+                window.location.href = "login.html"; // ✅ Redirect to login if not logged in
+            }
+        };
+
         if (sessionStorage.getItem("loggedIn") !== "true") {
             window.location.href = "login.html";
         }
