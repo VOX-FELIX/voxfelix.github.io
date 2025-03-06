@@ -14,7 +14,7 @@
     <div class="container">
         <h2>Welcome to the Developer Portal</h2>
         <p id="status">Access Granted</p>
-        <button onclick="logout()">Logout</button>
+        <button onclick="logout()">Log Out</button>
     </div>
 
     <script>
@@ -22,10 +22,12 @@
             window.location.href = "login.html";
         }
 
-    function logout() {
-        localStorage.removeItem("loggedInUser");  // ✅ Remove session data
-        window.location.href = "login.html";  // ✅ Redirect to login page
-    }
+       function logout() {
+            localStorage.clear(); // ✅ Wipes out all session data
+            sessionStorage.clear(); // ✅ Extra safeguard
+            window.location.replace("login.html"); // ✅ Forces redirect to login
+        }
+
 
     </script>
 </body>
