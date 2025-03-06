@@ -22,10 +22,11 @@
             window.location.href = "login.html";
         }
 
-        function logout() {
-            sessionStorage.removeItem("loggedIn");
-            window.location.href = "login.html";
-        }
+    function logout() {
+        localStorage.removeItem("loggedInUser");  // ✅ Remove session data
+        window.location.href = "login.html";  // ✅ Redirect to login page
+    }
+
     </script>
 </body>
 </html>
