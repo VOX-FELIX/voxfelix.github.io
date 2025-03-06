@@ -1,41 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOX FELIX | Developer Portal</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
-        .container { padding: 50px; background: white; width: 60%; margin: 50px auto; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Developer Portal</h1>
-        <p>Welcome to the private developer page.</p>
-        <a href="https://github.com/your-repo" target="_blank">Access GitHub Repository</a>
-        <button onclick="logout()">Logout</button>
-    </div>
+<script>
+    const firebaseConfig = { /* YOUR CONFIG HERE */ };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    <script>
-        const firebaseConfig = { /* YOUR CONFIG HERE */ };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        auth.onAuthStateChanged(user => {
-            if (!user) {
-                window.location.href = "login.html";
-            }
-        });
-
-        function logout() {
-            auth.signOut().then(() => {
-                window.location.href = "index.html";
-            });
+    auth.onAuthStateChanged(user => {
+        if (!user) {
+            alert("You must log in first!");
+            window.location.href = "index.html";  // Redirects to home page instead of login page
         }
-    </script>
-</body>
-</html>
+    });
+
+    function logout() {
+        auth.signOut().then(() => {
+            window.location.href = "index.html";  // Redirects back to homepage after logout
+        });
+    }
+</script>
