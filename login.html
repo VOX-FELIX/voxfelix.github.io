@@ -25,7 +25,7 @@
         let approvedUsers = [];
 
         // ✅ Fetch approved user emails from GitHub JSON file
-        fetch('https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/vox-felix/main/approved_users.json')
+        fetch('https://raw.githubusercontent.com/mapother/vox-felix/main/approved_users.json')
             .then(response => response.json())
             .then(data => {
                 approvedUsers = data.approved_users;
