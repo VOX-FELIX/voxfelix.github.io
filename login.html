@@ -25,12 +25,15 @@
         let approvedUsers = [];
 
         // ✅ Fetch approved user emails from GitHub JSON file
-        fetch('https://raw.githubusercontent.com/VOX-FELIX/voxfelix.github.io/refs/heads/main/approved_users.json')
-            .then(response => response.json())
-            .then(data => {
-                approvedUsers = data.approved_users;
-            })
-            .catch(error => console.error("Error loading approved users:", error));
+    
+    fetch('https://raw.githubusercontent.com/VOX-FELIX/voxfelix.github.io/refs/heads/main/approved_users.json')
+        .then(response => response.json())
+        .then(data => {
+            approvedUsers = data.approved_users;
+            console.log("✅ Approved Users List Loaded:", approvedUsers); // <-- DEBUG LOG
+        })
+        .catch(error => console.error("❌ Error loading approved users:", error));
+
 
         function checkLogin() {
             const email = document.getElementById("email").value;
