@@ -28,11 +28,12 @@
             window.location.href = "login.html";
         }
 
-       function logout() {
-            localStorage.clear(); // ✅ Wipes out all session data
-            sessionStorage.clear(); // ✅ Extra safeguard
-            window.location.replace("login.html"); // ✅ Forces redirect to login
+        function logout() {
+            localStorage.removeItem("loggedInUser");  // ✅ Clear user session
+            sessionStorage.clear();  // ✅ Extra safeguard
+            window.location.replace("login.html");  // ✅ Redirect to login
         }
+
 
 
     </script>
