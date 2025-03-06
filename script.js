@@ -1,3 +1,5 @@
+console.log("🔥 script.js is loading!");
+
 function login() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
