@@ -22,6 +22,8 @@
     </div>
 
     <script>
+        console.log("Loaded Users from LocalStorage:", JSON.parse(localStorage.getItem("registeredUsers")));
+
         let approvedUsers = [];
 
         // ✅ Fetch approved user emails from GitHub JSON file
