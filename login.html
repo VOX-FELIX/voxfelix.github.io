@@ -3,34 +3,50 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 
 <script>
-    // 🔑 Replace with your Firebase config
-    const firebaseConfig = {
-        apiKey: "YOUR-API-KEY",
-        authDomain: "your-app.firebaseapp.com",
-        projectId: "your-app-id",
-        storageBucket: "your-app.appspot.com",
-        messagingSenderId: "your-messaging-id",
-        appId: "your-app-id"
-    };
-
-    // Ensure Firebase initializes once the page loads
     document.addEventListener("DOMContentLoaded", function () {
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        try {
+            // 🔑 Replace with your actual Firebase config
+            const firebaseConfig = {
+                apiKey: "YOUR-API-KEY",
+                authDomain: "your-app.firebaseapp.com",
+                projectId: "your-app-id",
+                storageBucket: "your-app.appspot.com",
+                messagingSenderId: "your-messaging-id",
+                appId: "your-app-id"
+            };
 
-        // ✅ Ensure button functions are set up correctly
-        document.getElementById("registerBtn").onclick = function () {
-            register(auth);
-        };
-        document.getElementById("loginBtn").onclick = function () {
-            login(auth);
-        };
-        document.getElementById("resetBtn").onclick = function () {
-            resetPassword(auth);
-        };
+            // ✅ Initialize Firebase if not already initialized
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+
+            const auth = firebase.auth();
+
+            // ✅ Attach button functions safely
+            const registerBtn = document.getElementById("registerBtn");
+            const loginBtn = document.getElementById("loginBtn");
+            const resetBtn = document.getElementById("resetBtn");
+
+            if (registerBtn && loginBtn && resetBtn) {
+                registerBtn.onclick = function () {
+                    register(auth);
+                };
+                loginBtn.onclick = function () {
+                    login(auth);
+                };
+                resetBtn.onclick = function () {
+                    resetPassword(auth);
+                };
+            } else {
+                console.error("Buttons not found! Make sure your login.html file contains the correct button IDs.");
+            }
+
+        } catch (error) {
+            console.error("🔥 Firebase Initialization Error:", error);
+        }
     });
 
-    // 🔒 Define allowed email list
+    // 🔒 Define allowed emails
     const allowedEmails = [
         "seankerr@novawerke.ai",
  	    “dkerr14@jh.edu”,
@@ -92,3 +108,4 @@
             });
     }
 </script>
+
