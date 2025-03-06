@@ -1,10 +1,8 @@
-<script>
-    // Load Firebase from CDN
-    document.write(`
-        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"><\/script>
-        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"><\/script>
-    `);
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 
+<script>
     // 🔑 Replace with your Firebase config
     const firebaseConfig = {
         apiKey: "YOUR-API-KEY",
@@ -15,13 +13,25 @@
         appId: "your-app-id"
     };
 
-    // Initialize Firebase
+    // Ensure Firebase initializes once the page loads
     document.addEventListener("DOMContentLoaded", function () {
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Define allowed emails
-        const allowedEmails = [
+        // ✅ Ensure button functions are set up correctly
+        document.getElementById("registerBtn").onclick = function () {
+            register(auth);
+        };
+        document.getElementById("loginBtn").onclick = function () {
+            login(auth);
+        };
+        document.getElementById("resetBtn").onclick = function () {
+            resetPassword(auth);
+        };
+    });
+
+    // 🔒 Define allowed email list
+    const allowedEmails = [
         "seankerr@novawerke.ai",
  	    “dkerr14@jh.edu”,
         "qiuhaoalex@gmail.com”,
@@ -36,21 +46,7 @@
         "sstein28@jh.edu”,
         “mtorre44@jh.edu”,
         “mattwalter35@gmail.com”,
-        ];
-
-        // Attach event listeners after Firebase loads
-        document.getElementById("registerBtn").addEventListener("click", function () {
-            register(auth, allowedEmails);
-        });
-
-        document.getElementById("loginBtn").addEventListener("click", function () {
-            login(auth);
-        });
-
-        document.getElementById("resetBtn").addEventListener("click", function () {
-            resetPassword(auth);
-        });
-    });
+    ];
 
     function login(auth) {
         const email = document.getElementById("email").value;
@@ -66,7 +62,7 @@
             });
     }
 
-    function register(auth, allowedEmails) {
+    function register(auth) {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
