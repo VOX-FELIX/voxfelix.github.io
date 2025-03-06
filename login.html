@@ -25,55 +25,87 @@
     </div>
 
     <script>
-        // 🔑 Replace with your Firebase config
-        const firebaseConfig = {
-            apiKey: "YOUR-API-KEY",
-            authDomain: "your-app.firebaseapp.com",
-            projectId: "your-app-id",
-            storageBucket: "your-app.appspot.com",
-            messagingSenderId: "your-messaging-id",
-            appId: "your-app-id"
-        };
+    // 🔑 Replace with your Firebase config
+    const firebaseConfig = {
+        apiKey: "YOUR-API-KEY",
+        authDomain: "your-app.firebaseapp.com",
+        projectId: "your-app-id",
+        storageBucket: "your-app.appspot.com",
+        messagingSenderId: "your-messaging-id",
+        appId: "your-app-id"
+    };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-        function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    localStorage.setItem("auth", "true");
-                    window.location.href = "developer.html";
-                })
-                .catch(error => {
-                    document.getElementById("message").innerText = error.message;
-                });
+    // 🔒 Define **approved** email addresses (modify this list)
+    const allowedEmails = [
+        "seankerr@novawerke.ai",
+ 	“dkerr14@jh.edu”,
+“dkerr14@jh.edu”,
+"qiuhaoalex@gmail.com”,
+"csnelli1@jh.edu”,
+"ctighe4@jh.edu”,
+"ltesta1@jh.edu”,
+"lmirele2@jh.edu”,
+"michelevanzaldua@gmail.com”,
+"snellingstephen91@gmail.com”,
+"nburton8@jh.edu”,
+"rchin7@jh.edu”,
+"sstein28@jh.edu”,
+“mtorre44@jh.edu”,
+“mattwalter35@gmail.com”,
+
+
+
+    ];
+
+    function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        
+        auth.signInWithEmailAndPassword(email, password)
+            .then(() => {
+                localStorage.setItem("auth", "true");
+                window.location.href = "developer.html";
+            })
+            .catch(error => {
+                document.getElementById("message").innerText = error.message;
+            });
+    }
+
+    function register() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Check if the email is in the allowed list
+        if (!allowedEmails.includes(email)) {
+            document.getElementById("message").innerText = "Your email is not authorized to register.";
+            return;
         }
 
-        function register() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    alert("Account created! You can now log in.");
-                })
-                .catch(error => {
-                    document.getElementById("message").innerText = error.message;
-                });
-        }
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                alert("Account created! You can now log in.");
+            })
+            .catch(error => {
+                document.getElementById("message").innerText = error.message;
+            });
+    }
 
-        function resetPassword() {
-            const email = prompt("Enter your email to reset your password:");
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    alert("Password reset email sent!");
-                })
-                .catch(error => {
-                    alert(error.message);
-                });
-        }
-    </script>
+    function resetPassword() {
+        const email = prompt("Enter your email to reset your password:");
+        
+        auth.sendPasswordResetEmail(email)
+            .then(() => {
+                alert("Password reset email sent!");
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+    }
+</script>
+
 </body>
 </html>
