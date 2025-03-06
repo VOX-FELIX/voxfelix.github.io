@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOX FELIX | Developer Portal</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
         .container { padding: 50px; background: white; width: 60%; margin: 50px auto; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
@@ -15,46 +13,19 @@
 <body>
     <div class="container">
         <h2>Welcome to the Developer Portal</h2>
-        <p id="user-email"></p>
-        <button id="logoutBtn">Logout</button>
+        <p id="status">Access Granted</p>
+        <button onclick="logout()">Logout</button>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            try {
-                const firebaseConfig = {
-                    apiKey: "YOUR-API-KEY",
-                    authDomain: "your-app.firebaseapp.com",
-                    projectId: "your-app-id",
-                    storageBucket: "your-app.appspot.com",
-                    messagingSenderId: "your-messaging-id",
-                    appId: "your-app-id"
-                };
+        if (sessionStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
 
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
-                }
-
-                const auth = firebase.auth();
-
-                auth.onAuthStateChanged(user => {
-                    if (user) {
-                        document.getElementById("user-email").innerText = `Logged in as: ${user.email}`;
-                    } else {
-                        window.location.href = "login.html";
-                    }
-                });
-
-                document.getElementById("logoutBtn").onclick = function () {
-                    auth.signOut().then(() => {
-                        window.location.href = "login.html";
-                    });
-                };
-
-            } catch (error) {
-                console.error("🔥 Firebase Initialization Error:", error);
-            }
-        });
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+            window.location.href = "login.html";
+        }
     </script>
 </body>
 </html>
