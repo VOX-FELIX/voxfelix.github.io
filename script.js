@@ -1,27 +1,34 @@
-console.log("🔥 script.js is loading!");
+<!-- script.js -->
+const approvedUsers = [
+    "seankerr@novawerke.ai", "dkerr14@jh.edu", "qiuhaoalex@gmail.com",
+    "csnelli1@jh.edu", "ctighe4@jh.edu", "ltesta1@jh.edu",
+    "lmirele2@jh.edu", "michelevanzaldua@gmail.com", "snellingstephen91@gmail.com",
+    "nburton8@jh.edu", "rchin7@jh.edu", "sstein28@jh.edu",
+    "mtorre44@jh.edu", "mattwalter35@gmail.com"
+];
 
 function login() {
     const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    console.log("🛠️ Login Attempt: ", email, password); // Debugging Line
-
-    // Retrieve stored users
-    let users = JSON.parse(localStorage.getItem("registeredUsers")) || {};
-    console.log("📂 Stored Users: ", users); // Debugging Line
-
-    if (users[email]) {
-        console.log("✅ User found in storage. Checking password...");
-        if (users[email] === password) {
-            console.log("✅ Password correct! Logging in...");
-            localStorage.setItem("loggedInUser", email); // Store session
-            window.location.href = "developer.html"; // Redirect to Developer Page
-        } else {
-            console.log("❌ Incorrect password.");
-            document.getElementById("message").innerText = "❌ Incorrect password.";
-        }
+    if (approvedUsers.includes(email)) {
+        localStorage.setItem("loggedInUser", email);
+        window.location.href = "developer.html";
     } else {
-        console.log("❌ User not found in storage.");
-        document.getElementById("message").innerText = "❌ Email not registered.";
+        document.getElementById("message").innerText = "❌ Access Denied. Email not recognized.";
     }
+}
+
+window.onload = function () {
+    const userEmail = localStorage.getItem("loggedInUser");
+    if (userEmail && document.getElementById("userEmail")) {
+        document.getElementById("userEmail").innerText = userEmail;
+    }
+
+    if (!userEmail && window.location.pathname.includes("developer.html")) {
+        window.location.href = "login.html";
+    }
+};
+
+function logout() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
 }
