@@ -50,10 +50,23 @@ button:hover {
 }
 
 /* Form Inputs */
-input[type="email"], input[type="password"] {
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-group {
     width: 90%;
+    margin: auto;
+    text-align: left;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
     padding: 12px;
-    margin: 10px 0;
     border: 1px solid #bbb;
     border-radius: 6px;
     font-size: 14px;
@@ -66,17 +79,15 @@ input[type="email"]:focus, input[type="password"]:focus {
     outline: none;
 }
 
-/* Password Toggle */
+/* Password Container */
 .password-container {
     position: relative;
-    display: block;
-    width: 90%;
-    margin: auto;
+    width: 100%;
 }
 .password-container input {
     width: 100%;
     padding-right: 40px;
-    height: 40px;
+    height: 44px;
     box-sizing: border-box;
 }
 .toggle-password {
@@ -106,6 +117,9 @@ pre {
         width: 80%;
     }
     button {
+        width: 100%;
+    }
+    .form-group {
         width: 100%;
     }
     input[type="email"], input[type="password"] {
