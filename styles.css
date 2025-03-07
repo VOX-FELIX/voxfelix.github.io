@@ -58,6 +58,7 @@ input[type="email"], input[type="password"] {
     border-radius: 6px;
     font-size: 14px;
     transition: 0.3s;
+    box-sizing: border-box;
 }
 input[type="email"]:focus, input[type="password"]:focus {
     border-color: #0066ff;
@@ -68,12 +69,15 @@ input[type="email"]:focus, input[type="password"]:focus {
 /* Password Toggle */
 .password-container {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 90%;
+    margin: auto;
 }
 .password-container input {
     width: 100%;
     padding-right: 40px;
+    height: 40px;
+    box-sizing: border-box;
 }
 .toggle-password {
     position: absolute;
