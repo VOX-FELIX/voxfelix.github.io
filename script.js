@@ -54,9 +54,13 @@ function resetPassword() {
 
 function launchColab() {
     const colabURL = "https://colab.research.google.com/#create=true&language=python";
-    const newTab = window.open(colabURL, "_blank");
     
-    if (!newTab || newTab.closed || typeof newTab.closed == "undefined") {
+    // Attempt to open in a new tab
+    let newTab = window.open("", "_blank");
+    
+    if (newTab) {
+        newTab.location = colabURL;
+    } else {
         alert("🔒 Pop-up blocked! Please allow pop-ups for this site.");
     }
 }
