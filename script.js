@@ -7,7 +7,7 @@ const approvedUsers = [
     "mtorre44@jh.edu", "mattwalter35@gmail.com"
 ];
 
-const users = JSON.parse(localStorage.getItem("users")) || {};
+let users = JSON.parse(localStorage.getItem("users")) || {};
 
 function togglePasswordVisibility() {
     const passwordField = document.getElementById("password");
@@ -23,11 +23,17 @@ function login() {
         return;
     }
 
-    if (users[email] && users[email] === password) {
+    if (!users[email]) {
+        users[email] = password; // First-time login sets the password
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("✅ Password set successfully! You can now log in.");
+    }
+
+    if (users[email] === password) {
         localStorage.setItem("loggedInUser", email);
         window.location.href = "developer.html";
     } else {
-        document.getElementById("message").innerText = "❌ Incorrect email or password.";
+        document.getElementById("message").innerText = "❌ Incorrect password.";
     }
 }
 
