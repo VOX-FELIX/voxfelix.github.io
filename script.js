@@ -52,6 +52,16 @@ function resetPassword() {
     }
 }
 
+function launchColab() {
+    const colabURL = "https://colab.research.google.com/#create=true&language=python";
+    const newTab = window.open(colabURL, "_blank");
+    
+    if (!newTab || newTab.closed || typeof newTab.closed == "undefined") {
+        alert("🔒 Pop-up blocked! Please allow pop-ups for this site.");
+    }
+}
+
+
 window.onload = function () {
     const userEmail = localStorage.getItem("loggedInUser");
     if (userEmail && document.getElementById("userEmail")) {
