@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOX FELIX | Submit Blog Post</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Submit a Blog Post</h1>
+        <form id="blogForm">
+            <label for="blogTitle">Title:</label>
+            <input type="text" id="blogTitle" placeholder="Enter blog title" required>
+            
+            <label for="blogContent">Content:</label>
+            <textarea id="blogContent" placeholder="Write your blog post here..." rows="5" required></textarea>
+            
+            <label for="blogLink">Optional External Link:</label>
+            <input type="url" id="blogLink" placeholder="Enter a related link (optional)">
+            
+            <button type="button" onclick="submitBlogPost()">Submit Blog</button>
+        </form>
+        <p id="blogMessage"></p>
+
+        <button onclick="window.close()">Close</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

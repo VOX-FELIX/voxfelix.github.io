@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOX FELIX | Blog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="loadBlogPosts()">
+    <div class="container">
+        <h1>VOX FELIX Blog</h1>
+        <p>Welcome to our blog! Explore the latest updates and insights on emotionally intelligent AI.</p>
+
+        <div id="blogContainer">
+            <p>Loading blog posts...</p>
+        </div>
+
+        <button onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+    
+    <script>
+        function loadBlogPosts() {
+            const blogContainer = document.getElementById("blogContainer");
+            const blogPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
+
+            if (blogPosts.length === 0) {
+                blogContainer.innerHTML = "<p>No blog posts yet. Developers can submit posts via the Developer Portal.</p>";
+                return;
+            }
+
+            blogContainer.innerHTML = "";
+            blogPosts.forEach(post => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("blog-post");
+                postElement.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p><i>Posted on ${post.date} by ${post.author}</i></p>
+                    <p>${post.content}</p>
+                    ${post.link ? `<p><a href="${post.link}" target="_blank">🔗 Read more</a></p>` : ""}
+                    <hr>
+                `;
+                blogContainer.appendChild(postElement);
+            });
+        }
+    </script>
+</body>
+</html>
